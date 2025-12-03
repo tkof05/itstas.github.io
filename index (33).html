@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+
+    <!--Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #BFC4F2; /* solid periwinkle */
+            color: #333;
+        }
+
+        header {
+            background: #463C36;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            position: relative; /* for the side record */
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 16px 40px;
+        }
+
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        img {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        img:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .gallery {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+        }
+
+        .cat-section img {
+            max-width: 300px;
+            border-radius: 12px;
+        }
+
+        /* Glow boxes for all sections (cards) */
+        .glow-box {
+            background: #FFFFFF;
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(191, 196, 242, 0.7);
+            box-shadow: 0 8px 30px rgba(117, 122, 191, 0.25);
+            margin-bottom: 32px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .glow-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(117, 122, 191, 0.35);
+        }
+
+        /* Slideshow  */
+        .slideshow-container {
+            max-width: 350px;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide img {
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            padding: 8px 12px;
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+            user-select: none;
+            border-radius: 3px;
+            background-color: rgba(0, 0, 0, 0.3);
+            transform: translateY(-50%);
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .prev { left: 0; }
+        .next { right: 0; }
+
+        /* Fade animation */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1s;
+        }
+
+        @keyframes fade {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        /* wavy text animation for Marcel */
+        .wavy-text {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .wavy-text span {
+            display: inline-block;
+            animation: wave 1.5s infinite ease-in-out;
+            animation-delay: calc(0.08s * var(--i));
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* floating stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            opacity: 0.7;
+            animation: floatStar linear infinite;
+        }
+
+        @keyframes floatStar {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-800px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Section titles + divider */
+        .section-title {
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 0.03em;
+            margin-bottom: 8px;
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 2px;
+            border-radius: 999px;
+            margin: 0 auto 20px auto;
+            background: linear-gradient(90deg, #BFC4F2, #8F87FF, #BFC4F2);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 0;
+            margin-bottom: 18px;
+        }
+
+        /* Pinterest-style: Things I Love Right Now */
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+        }
+
+        .mood-card {
+            background: #F7F5FF;
+            border-radius: 14px;
+            padding: 10px 12px;
+            font-size: 13px;
+            line-height: 1.4;
+            box-shadow: 0 4px 14px rgba(122, 111, 190, 0.18);
+        }
+
+        /* tags for music & signs */
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0 4px;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(191, 196, 242, 0.4);
+            font-size: 12px;
+        }
+
+        /* grids for signs + perfumes */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .info-card {
+            background: #F7F5FF;
+            border-radius: 14px;
+            padding: 12px;
+            font-size: 13px;
+            box-shadow: 0 4px 14px rgba(122, 111, 190, 0.18);
+        }
+
+        .info-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #777;
+        }
+
+        .info-main {
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .info-note {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #666;
+        }
+
+        .perfume-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .perfume-card {
+            background: #FFF7FB;
+            border-radius: 16px;
+            padding: 12px 14px;
+            font-size: 13px;
+            box-shadow: 0 4px 14px rgba(190, 111, 175, 0.18);
+            text-align: center;
+        }
+
+        .perfume-card img {
+            width: 100%;
+            max-width: 120px; /* smaller so it fits the box */
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto 8px auto;
+        }
+
+        .perfume-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .perfume-notes {
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* animation for the money gif */
+        .money-gif {
+            max-width: 220px;
+            animation: floatMoney 3s ease-in-out infinite;
+        }
+
+        .money-gif:hover {
+            box-shadow: none;
+        }
+
+        @keyframes floatMoney {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-6px) rotate(-2deg);
+            }
+        }
+
+        /* optional style for intro image */
+        .intro-photo {
+            max-width: 230px;
+            border-radius: 16px;
+        }
+
+        /* Floating side gifs in the periwinkle background */
+        .side-gif {
+            position: fixed;
+            width: 120px; /* bigger now */
+            pointer-events: none;
+            z-index: -1; /* behind the glow boxes */
+            animation: floatSide 4.5s ease-in-out infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes floatSide {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== Header record-player on the side ===== */
+        .header-record {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .record-wrapper {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+        }
+
+        .record-disc {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: none; /* don't use global hover animation */
+        }
+
+        .record-disc:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .record-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 6px 14px;
+            font-family: 'Poppins', system-ui, sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            background: #8F87FF;
+            color: white;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+        }
+
+        .record-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+            background: #776df0;
+        }
+
+        .spinning {
+            animation: spinRecord 4s linear infinite;
+        }
+
+        @keyframes spinRecord {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating stars layer -->
+    <div class="stars"></div>
+
+    <!-- Floating side gifs -->
+    <div class="floating-gifs">
+        <!-- Replace the src with any gifs as you like -->
+        <img src="ezgif.com-animated-gif-maker.gif" class="side-gif" style="left: 25px; top: 18%;">
+        <img src="ezgif.com-animated-gif-maker.gif" class="side-gif" style="right: 25px; top: 48%;">
+        <img src="ezgif.com-animated-gif-maker.gif" class="side-gif" style="left: 25px; bottom: 12%;">
+    </div>
+
+    <header>
+        <h1>⭐️ About Me ⭐️</h1>
+        <p>Welcome to my personal website!</p>
+
+        <!-- record player on the side of the header -->
+        <div class="header-record">
+            <div class="record-wrapper">
+                <!-- change this image to whatever you want as the "record" -->
+                <img src="https://i.pinimg.com/736x/d5/24/a9/d524a95ded8355652789574e30d222c1.jpg" alt="Record" class="record-disc">
+            </div>
+            <button class="record-btn" id="recordToggle">▶ Play</button>
+        </div>
+    </header>
+
+    <!-- audio element for your song (change src to your file name or URL) -->
+    <audio id="recordAudio" src="same-ol-mistakes-128-ytshorts.savetube.me.mp3"></audio>
+
+    <div class="container">
+
+        <!-- ABOUT ME SECTION -->
+        <div class="glow-box">
+            <h2 class="section-title">Hello, I'm Tasnim!</h2>
+            <div class="section-divider"></div>
+
+            <p>
+                I'm a student studying financial and business economics at York University in Vaughan, and I'm hoping to build a future 
+                career in <strong>finance and banking</strong>.
+            </p>
+
+            <p>
+                Through my program, I’ve been building skills in:
+            </p>
+            <ul>
+                <li><strong>Microeconomics:</strong> how individuals, consumers, and firms make choices</li>
+                <li><strong>Macroeconomics:</strong> things like inflation, unemployment, and economic growth</li>
+                <li><strong>Data & analysis:</strong> working with numbers, graphs, and real economic data</li>
+                <li><strong>Finance basics:</strong> interest rates, investment decisions, and financial markets</li>
+            </ul>
+
+            <!-- INTRO IMAGE -->
+            <img src="IMG_3830.jpg" alt="Me" class="intro-photo">
+
+            <img src="https://www.yorku.ca/brand/wp-content/uploads/sites/386/2023/08/UB_Logos_2.png" alt="uni">
+            <!-- Money gif -->
+            <img src="https://i.pinimg.com/originals/43/6b/b4/436bb4b1e2650d251115d5341f4ddc37.gif" alt="uni" class="money-gif">
+
+            <p>
+                Aside from my studies, I love music, crocheting, shopping, and making creative projects. I come from a family of four along with a cat, two birds, three chickens, and one fish. A very important part of my life is my little baby boy cat, he's my favourite little creature. 
+                You can see him below!
+            </p>
+        </div>
+
+        <!-- Cat Image Section -->
+        <div class="cat-section glow-box">
+            <h2 class="section-title">🐾 My Cat 🐾</h2>
+            <div class="section-divider"></div>
+
+            <div id="catSlideshow" class="slideshow-container">
+                <div class="slide fade">
+                    <img src="5f29d5a1-2646-45f0-b1cd-afcf1c496443.jpg" alt="My Cat">
+                </div>
+                <div class="slide fade">
+                    <img src="IMG_2372.jpg" alt="My Cat">
+                </div>
+                <div class="slide fade">
+                    <img src="8edfc5e7-33c6-4beb-83ea-406457a0a5e6.JPG" alt="My Cat">
+                </div>
+
+                <a class="prev" onclick="plusCatSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusCatSlides(1)">&#10095;</a>
+            </div>
+
+            <!-- WAVY TEXT HERE -->
+            <h2 class="wavy-text">
+                <span style="--i:1">h</span>
+                <span style="--i:2">i</span>
+                <span style="--i:3">&nbsp;</span>
+                <span style="--i:4">i</span>
+                <span style="--i:5">m</span>
+                <span style="--i:6">&nbsp;</span>
+                <span style="--i:7">m</span>
+                <span style="--i:8">a</span>
+                <span style="--i:9">r</span>
+                <span style="--i:10">c</span>
+                <span style="--i:11">e</span>
+                <span style="--i:12">l</span>
+                <span style="--i:13">!</span>
+            </h2>
+        </div>
+
+        <!-- THINGS I LOVE RIGHT NOW -->
+        <div class="glow-box">
+            <h2 class="section-title">Things I Love Right Now</h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">A Moodboard of Current Interests ✧</p>
+
+            <div class="mood-grid">
+                <div class="mood-card">
+                    Rewatching my comfort show, Bojack Horseman.
+                </div>
+                <div class="mood-card">
+                    Crocheting cute hats and scarves.
+                </div>
+                <div class="mood-card">
+                    Coffee runs & little solo
+                    walks when the weather is nice.
+                </div>
+                <div class="mood-card">
+                    Making nail sets and learning new techniques.
+                </div>
+                <div class="mood-card">
+                    Frankenstein (2025) the movie!
+                </div>
+            </div>
+        </div>
+
+        <!-- FUTURE CAREER PLANS -->
+        <div class="glow-box">
+            <h2 class="section-title">Future Career Plans</h2>
+            <div class="section-divider"></div>
+            <p>
+                My future plans are to hopefully get a co-op placement related to my field of study. I hope to gain work experience alongside my studies. After graduating I aim to get a job in banking and as I learn on the job I hope to work up to higher positions. Some specific fields that interest me are financial planning and investment management.
+            </p>
+        </div>
+
+        <!-- Music Section -->
+        <div class="music-section glow-box">
+            <h2 class="section-title">🎶 Music 🎶</h2>
+            <div class="section-divider"></div>
+
+            <p>Favourite artists recently have been Rihanna, Lana Del Rey, Kali Uchis, and more. My playlists are usually all over the place genre wise, ranging from chill relaxing music to rap and dance music.</p>
+
+            <div id="musicSlideshow" class="slideshow-container">
+                <div class="slide fade">
+                    <img src="https://i.pinimg.com/1200x/fc/22/9b/fc229be3e7049e4a14ce9216640140f5.jpg" alt="Music">
+                </div>
+                <div class="slide fade">
+                    <img src="https://i.pinimg.com/736x/bb/52/19/bb5219f18ad3df6bf1ac6a4708b648c1.jpg" alt="Music">
+                </div>
+                <div class="slide fade">
+                    <img src="https://i.pinimg.com/736x/c5/c6/fb/c5c6fb7213b68cf23705a0a7db2df1e0.jpg" alt="Music">
+                </div>
+
+                <a class="prev" onclick="plusMusicSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusMusicSlides(1)">&#10095;</a>
+            </div>
+        </div>
+
+        <!-- Travel Section -->
+        <div class="travel-section glow-box">
+            <h2 class="section-title">✈ My Travels ✈️</h2>
+            <div class="section-divider"></div>
+
+            <ul>
+                <li>I <strong>LOVE</strong> travelling, my most recent trip was to Morocco, highly recommend!</li>
+            </ul>
+
+            <div id="travelSlideshow" class="slideshow-container">
+                <div class="slide fade">
+                    <img src="IMG_3832.jpg" alt="Travel">
+                </div>
+                <div class="slide fade">
+                    <img src="IMG_3833.jpg" alt="Travel">
+                </div>
+                <div class="slide fade">
+                    <img src="IMG_9837.jpg" alt="Travel"> 
+                </div>
+                <div class="slide fade">
+                    <img src="IMG_3837.jpg" alt="Travel">
+                </div>
+                <div class="slide fade">
+                    <img src="IMG_3834.jpg" alt="Travel"> 
+                </div>
+
+                <a class="prev" onclick="plusTravelSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusTravelSlides(1)">&#10095;</a>
+            </div>
+        </div>
+
+        <!-- Travel Map (VisitedPlaces.com) -->
+        <div class="glow-box">
+            <h2 class="section-title">🌍 Places I've Travelled 🌍</h2>
+            <div class="section-divider"></div>
+            <div id="chartdiv" style="width: 100%; height: 600px;"></div>
+        </div>
+
+        <!-- Favorite Perfumes  -->
+        <div class="glow-box">
+            <h2 class="section-title">🌸 Current Favorite Perfumes 🌸</h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">A few of my favourites in my collection.</p>
+
+            <div class="perfume-grid">
+                <div class="perfume-card">
+                    <!-- Perfume 1 image -->
+                    <img src="https://holtrenfrew.scene7.com/is/image/HoltRenfrew1/u_3145891364606_01?$Thumbnail$" alt="Chanel Chance Eau Fraîche">
+                    <div class="perfume-name">Chanel Chance Eau Fraîche</div>
+                    <div class="perfume-notes">
+                        Energetic, Sparkling, and Crisp
+                    </div>
+                </div>
+                <div class="perfume-card">
+                    <!-- Perfume 2 image -->
+                    <img src="https://fimgs.net/mdimg/perfume-thumbs/375x500.50748.jpg" alt="Cartier Carat">
+                    <div class="perfume-name">Cartier Carat</div>
+                    <div class="perfume-notes">
+                        Luminous, Delicate, and Refined
+                    </div>
+                </div>
+                <div class="perfume-card">
+                    <!-- Perfume 3 image -->
+                    <img src="https://m.media-amazon.com/images/I/41hEQYNtvLL._AC_UF1000,1000_QL80_.jpg" alt="Narciso Rodriguez Musc Noir Rose">
+                    <div class="perfume-name">Narciso Rodriguez Musc Noir Rose</div>
+                    <div class="perfume-notes">
+                        Intimate, Sweet, and Captivating
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="glow-box">
+            <h2 class="section-title">Contact</h2>
+            <div class="section-divider"></div>
+            <p>Email: <strong>tkofahi@my.yorku.ca</strong></p>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2025 Tasnim Kofahi — All rights reserved.
+    </footer>
+
+    <!-- VisitedPlaces.com code -->
+    <script>
+    var visitedplaces_config = {
+      "map": "world",
+      "projection": "geoEquirectangular",
+      "theme": "light-blue",
+      "water": 1,
+      "graticule": 0,
+      "names": 1,
+      "duration": 2000,
+      "slider": 0,
+      "autoplay": 1,
+      "autozoom": "none",
+      "data": [
+        {
+          "colors": {},
+          "places": [
+            "CA"
+          ],
+          "text": "My Home",
+          "position": {
+            "zoomLevel": 1,
+            "geoPoint": {
+              "longitude": 0,
+              "latitude": 0
+            },
+            "rotationX": 96.5,
+            "rotationY": -60.4
+          }
+        },
+        {
+          "colors": {},
+          "places": [
+            "CY",
+            "GR",
+            "TR"
+          ],
+          "text": "Europe",
+          "position": {
+            "zoomLevel": 2.4,
+            "geoPoint": {
+              "longitude": 12.1,
+              "latitude": 53.3
+            },
+            "rotationX": -12.1,
+            "rotationY": -53.3
+          }
+        },
+        {
+          "colors": {},
+          "places": [
+            "BS",
+            "DO",
+            "JM",
+            "MX",
+            "PR",
+            "VI",
+            "US"
+          ],
+          "text": "North America",
+          "position": {
+              "zoomLevel": 1.6,
+              "geoPoint": {
+                "longitude": -100.6,
+                "latitude": 44.4
+              },
+              "rotationX": 100.6,
+              "rotationY": -44.4
+          }
+        },
+        {
+          "colors": {},
+          "places": [
+            "MA"
+          ],
+          "text": "Africa",
+          "position": {
+            "zoomLevel": 1.5,
+            "geoPoint": {
+              "longitude": 18,
+              "latitude": 1.6
+            },
+            "rotationX": -18,
+            "rotationY": -1.6
+          }
+        },
+        {
+          "colors": {},
+          "places": [
+            "JO"
+          ],
+          "text": "Asia",
+          "position": {
+            "zoomLevel": 1.5,
+            "geoPoint": {
+              "longitude": 83.8,
+              "latitude": 33.3
+            },
+            "rotationX": -83.8,
+            "rotationY": -33.3
+          }
+        },
+        {
+          "colors": {},
+          "places": [
+            "AU"
+          ],
+          "text": "Oceania",
+          "position": {
+            "zoomLevel": 1.9,
+            "geoPoint": {
+              "longitude": 134.3,
+              "latitude": -25.7
+            },
+            "rotationX": -134.3,
+            "rotationY": 25.7
+          }
+        }
+      ],
+      "home": "CA"
+    };
+    </script>
+    <script src="https://www.visitedplaces.com/js/common.js"></script>
+    <script src="https://www.visitedplaces.com/js/viewer.js"></script>
+    <!-- end: VisitedPlaces.com code -->
+
+    <!-- Slideshow + Stars + Record JS -->
+    <script>
+        // Cat slideshow
+        let catIndex = 1;
+        showCatSlides(catIndex);
+        setInterval(() => { showCatSlides(catIndex + 1); }, 3000);
+
+        function plusCatSlides(n) {
+            showCatSlides(catIndex + n);
+        }
+
+        function showCatSlides(n) {
+            const slides = document.querySelectorAll("#catSlideshow .slide");
+            if (!slides.length) return;
+
+            if (n > slides.length) { n = 1; }
+            if (n < 1) { n = slides.length; }
+
+            catIndex = n;
+            slides.forEach(slide => slide.style.display = "none");
+            slides[catIndex - 1].style.display = "block";
+        }
+
+        // Music slideshow
+        let musicIndex = 1;
+        showMusicSlides(musicIndex);
+        setInterval(() => { showMusicSlides(musicIndex + 1); }, 3000);
+
+        function plusMusicSlides(n) {
+            showMusicSlides(musicIndex + n);
+        }
+
+        function showMusicSlides(n) {
+            const slides = document.querySelectorAll("#musicSlideshow .slide");
+            if (!slides.length) return;
+
+            if (n > slides.length) { n = 1; }
+            if (n < 1) { n = slides.length; }
+
+            musicIndex = n;
+            slides.forEach(slide => slide.style.display = "none");
+            slides[musicIndex - 1].style.display = "block";
+        }
+
+        // Travel slideshow
+        let travelIndex = 1;
+        showTravelSlides(travelIndex);
+        setInterval(() => { showTravelSlides(travelIndex + 1); }, 3000);
+
+        function plusTravelSlides(n) {
+            showTravelSlides(travelIndex + n);
+        }
+
+        function showTravelSlides(n) {
+            const slides = document.querySelectorAll("#travelSlideshow .slide");
+            if (!slides.length) return;
+
+            if (n > slides.length) { n = 1; }
+            if (n < 1) { n = slides.length; }
+
+            travelIndex = n;
+            slides.forEach(slide => slide.style.display = "none");
+            slides[travelIndex - 1].style.display = "block";
+        }
+
+        // Floating stars background
+        const starContainer = document.querySelector('.stars');
+
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.innerHTML = '✦';
+
+            const size = Math.random() * 15 + 10;
+            star.style.fontSize = size + 'px';
+            star.style.left = Math.random() * window.innerWidth + 'px';
+            star.style.bottom = '-50px';
+
+            const duration = Math.random() * 8 + 5;
+            star.style.animationDuration = duration + 's';
+
+            starContainer.appendChild(star);
+
+            setTimeout(() => {
+                star.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createStar, 500);
+
+        // Header record player
+        const recordAudio = document.getElementById('recordAudio');
+        const recordDisc = document.querySelector('.record-disc');
+        const recordToggle = document.getElementById('recordToggle');
+
+        if (recordAudio && recordDisc && recordToggle) {
+            recordToggle.addEventListener('click', () => {
+                if (recordAudio.paused) {
+                    recordAudio.play();
+                    recordDisc.classList.add('spinning');
+                    recordToggle.textContent = '⏸ Pause';
+                } else {
+                    recordAudio.pause();
+                    recordDisc.classList.remove('spinning');
+                    recordToggle.textContent = '▶ Play';
+                }
+            });
+
+            recordAudio.addEventListener('ended', () => {
+                recordDisc.classList.remove('spinning');
+                recordToggle.textContent = '▶ Play';
+            });
+        }
+    </script>
+
+</body>
+</html>
